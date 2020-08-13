@@ -1,0 +1,24 @@
+# mysql
+spring:
+  datasource:
+    #MySQL数据源
+    driverClassName:  com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/vueadmin?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: 121891
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.lmy.vueadmin.com.lmy.vueadmin.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+server:
+  port: 9000
