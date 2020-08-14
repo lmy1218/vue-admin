@@ -50,6 +50,9 @@ public class UserController {
 
         log.info(easyuser.toString());
         Easyuser user = userServiceImpl.findUserByUsernameAndPassword(easyuser.getUsername(), easyuser.getPassword());
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
         user.setPassword("");
         return ResponseEntity.ok(user);
     }
@@ -61,6 +64,7 @@ public class UserController {
      */
     @RequestMapping("/getUserList")
     public ResponseEntity<PageResult<Easyuser>> getUserList(QueryInfo queryInfo) {
+        log.info("分页查询");
         queryInfo.init();
         PageResult<Easyuser> pageResult = userServiceImpl.findUserList(queryInfo.getSearch(), queryInfo.getPage(), queryInfo.getSize());
         return ResponseEntity.ok(pageResult);
@@ -79,6 +83,64 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+
+    /**
+     * 添加用户
+     * @param user
+     * @return
+     */
+    @RequestMapping("addUser")
+    public ResponseEntity<Void> addUser(@RequestBody Easyuser user) {
+        int index = userServiceImpl.addUser(user);
+        if (index != 1) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * 用户删除
+     * @param id
+     * @return
+     */
+    @RequestMapping("deleteUser")
+    public ResponseEntity<Void> deleteUser(Integer id) {
+        log.info("删除用户");
+        int index = userServiceImpl.deleteUser(id);
+        if (index != 1) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * 根据id查询用户信息
+     * @param id
+     * @return
+     */
+    @RequestMapping("findUserById")
+    public ResponseEntity<Easyuser> findUserById(Integer id) {
+        log.info("根据ID查询用户信息");
+        Easyuser user = userServiceImpl.getUserById(id);
+        if (user == null) {
+            log.info("未查询到用户!");
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user);
+    }
+
+
+
+    @RequestMapping("editUser")
+    public ResponseEntity<Void> editUser(@RequestBody Easyuser easyuser) {
+        log.info("修改用户信息");
+        int index = userServiceImpl.editUser(easyuser);
+        if (index != 1) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.ok().build();
     }
 
 }

@@ -57,5 +57,28 @@ public class UserServiceImpl implements UserService {
     public int editState(Integer id, Boolean state) {
         return easyuserMapper.updateState(id, state);
     }
+
+    @Override
+    public int addUser(Easyuser user) {
+        // 初始化参数
+        user.setRole("普通用户");
+        user.setState(false);
+        return easyuserMapper.insertUser(user);
+    }
+
+    @Override
+    public int deleteUser(Integer id) {
+        return easyuserMapper.deleteUserById(id);
+    }
+
+    @Override
+    public Easyuser getUserById(Integer id) {
+        return easyuserMapper.selUserById(id);
+    }
+
+    @Override
+    public int editUser(Easyuser easyuser) {
+        return easyuserMapper.updateUser(easyuser);
+    }
 }
 

@@ -17,4 +17,12 @@ public interface UserService {
     PageResult<Easyuser> findUserList(String search, Integer page, Integer size);
 
     int editState(Integer id, Boolean state);
+
+    int addUser(Easyuser user);
+
+    int deleteUser(Integer id);
+
+    Easyuser getUserById(Integer id);
+
+    int editUser(Easyuser easyuser);
 }

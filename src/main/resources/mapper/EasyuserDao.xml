@@ -30,4 +30,17 @@
         update easyuser set state = #{state} where id = #{id}
     </update>
 
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id" >
+        insert into easyuser (username, password, email, role, state)
+                    values (#{username}, #{password}, #{email}, #{role}, #{state})
+    </insert>
+
+    <delete id="deleteUserById" >
+        delete from easyuser where id = #{id}
+    </delete>
+
+
+    <update id="updateUser" parameterType="com.lmy.vueadmin.entity.Easyuser" >
+        update easyuser set username = #{username}, password = #{password}, email = #{email} where id = #{id}
+    </update>
 </mapper>
